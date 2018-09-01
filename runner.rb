@@ -1,53 +1,60 @@
 require 'HTTP'
 
-puts "Enter an ID number:"
+puts "What would you like to do: 1. See all clouds 2. Create a cloud 3. See a specific cloud 4. Update a specific cloud 5. Destroy a specific cloud. Type in a number."
+answer = gets.chomp.to_i
 
-id = gets.chomp.to_i
+if answer == 1
 
-puts "And a new name:"
+  HTTP.get("http://localhost:3000/api/products")
 
-name = gets.chomp
+elsif answer == 2
 
-puts "And a new price:"
+  puts "What's the name of the new cloud?"
+  name = gets.chomp
 
-price = gets.chomp.to_i
+  puts "And the price?"
+  price = gets.chomp
 
-puts "And an image URL:"
+  puts "Add an image URL of the new cloud, please:"
+  image_url = gets.chomp
 
-image_url = gets.chomp
+  puts "And, finally, describe the cloud."
+  description = gets.chomp
 
-puts "And a description"
+  HTTP.post("http://localhost:3000/api/products", form: {name: name, price: price, image_url: image_url, description: description})
 
-description = gets.chomp
+elsif answer == 3
 
-HTTP.patch("http://localhost:3000/api/products/#{id}", form: {name: name, price: price, image_url: image_url, description: description})
+  puts "What's the ID of the cloud you'd like to see?"
+  id = gets.chomp.to_i
 
+  HTTP.get("http://localhost:3000/api/products?id=#{id}")
 
+elsif answer == 4
 
-# puts "Add a cloud! What's its name?"
+  puts "Enter an ID number:"
+  id = gets.chomp.to_i
 
-# name = gets.chomp
+  puts "And a new name:"
+  name = gets.chomp
 
-# puts "And its price?"
+  puts "And a new price:"
+  price = gets.chomp.to_i
 
-# price = gets.chomp.to_i
+  puts "And an image URL:"
+  image_url = gets.chomp
 
-# puts "Describe it, please."
+  puts "And a description"
+  description = gets.chomp
 
-# description = gets.chomp
+  HTTP.patch("http://localhost:3000/api/products/#{id}", form: {name: name, price: price, image_url: image_url, description: description})
 
-# puts "And provide a URL of a picture."
+elsif answer == 5
 
-# image_url = gets.chomp
+  puts "What's the ID of the cloud you'd like to destroy"
+  id = gets.chomp.to_i
 
-# HTTP.push("http://localhost:3000/api/products")
+  HTTP.delete("http://localhost:3000/api/products/#{id}")
 
-# @new_product = Product.new(    # Can't do this, can't create a product in the runner file. Have to do it through the HTTP push request.
-#                           name: name,
-#                           price: price,
-#                           image_url: image_url,
-#                           description: description
-#                           )
-# @new_product.save
-
-# HTTP.push("http://localhost:3000/api/products")
+end
+# the URL is what activates the actions in the controller. You don't need any logic in the runner file; you just need to send information.
