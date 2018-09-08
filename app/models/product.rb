@@ -6,8 +6,6 @@ class Product < ApplicationRecord
   validates :description, presence: true
   validates :description, length: { in: 1..200 }
 
-  validates :image_url, uniqueness: true
-
   validates :price, presence: true
   validates :price, numericality: { greater_than: 0 }
 
@@ -16,6 +14,8 @@ class Product < ApplicationRecord
   # end
 
   belongs_to :supplier
+
+  has_many :image
 
   def is_discounted?
     price < 100 #statements like this (<, >, ==, <=, >=, etc.) return a boolean. It's a convention to end the method with a question mark.
