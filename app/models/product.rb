@@ -14,8 +14,7 @@ class Product < ApplicationRecord
   # end
 
   belongs_to :supplier
-
-  has_many :image
+  has_many :images
 
   def is_discounted?
     price < 100 #statements like this (<, >, ==, <=, >=, etc.) return a boolean. It's a convention to end the method with a question mark.

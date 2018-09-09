@@ -22,7 +22,7 @@ json.supplier do
 end
 
 json.image do
-  json.array! product.image, partial: 'api/images/image', as: :image
+  json.array! product.images, partial: 'api/images/image', as: :image
 end
 
 
