@@ -1,6 +1,6 @@
 class Api::SessionsController < ApplicationController
 
-  def create
+    def create
     user = User.find_by(email: params[:email])
     if user && user.authenticate(params[:password])
       jwt = JWT.encode(
@@ -15,7 +15,5 @@ class Api::SessionsController < ApplicationController
     else
       render json: {}, status: :unauthorized
     end
-
   end
-
 end

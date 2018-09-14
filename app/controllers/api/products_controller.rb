@@ -16,7 +16,7 @@ class Api::ProductsController < ApplicationController
       @products = @products.order(sort_attribute)
     end
 
-    render "index.json.jbuilder"
+    render "show.json.jbuilder"
   end
 
   def create

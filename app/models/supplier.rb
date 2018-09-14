@@ -4,6 +4,6 @@ class Supplier < ApplicationRecord
   #   Product.where(supplier_id: id)
   # end
 
-  has_many :product
+  has_many :products
 
 end
