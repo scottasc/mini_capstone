@@ -1,10 +1,17 @@
 class Api::ProductsController < ApplicationController
+  before_action :authenticate_admin, except: [:index, :show]
 
   def index
     @products = Product.all
     sort_attribute = params[:sort]
     sort_order = params[:sort_order]
     search_term = params[:search]
+
+    category_name = params[:category]
+    if category_name
+      category = Category.find_by(name: category_name)
+      @products = category.products
+    end
 
     if search_term
       @products = @products.where("description iLIKE ?", "%#{search_term}%")
@@ -16,7 +23,7 @@ class Api::ProductsController < ApplicationController
       @products = @products.order(sort_attribute)
     end
 
-    render "show.json.jbuilder"
+    render "index.json.jbuilder"
   end
 
   def create
@@ -32,7 +39,6 @@ class Api::ProductsController < ApplicationController
     else
       render json: {errors: @product.errors.full_messages}, status: :unprocessable_entity
     end
-
   end
 
   def show
@@ -46,7 +52,7 @@ class Api::ProductsController < ApplicationController
     @product.price = params[:price] || @product.price
     @product.description = params[:description] || @product.description
     @product.stock = params[:stock] || @product.stock
-
+    
     if @product.save
       render "show.json.jbuilder"
     else
