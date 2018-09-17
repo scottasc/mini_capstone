@@ -14,7 +14,7 @@ class Product < ApplicationRecord
   # end
 
   belongs_to :supplier
-  belongs_to :user
+  belongs_to :user, optional: true # bring this up in class
   has_many :orders
   has_many :images
   has_many :product_categories
