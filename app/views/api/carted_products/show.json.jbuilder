@@ -1,0 +1,1 @@
+json.carted_product @carted_product
