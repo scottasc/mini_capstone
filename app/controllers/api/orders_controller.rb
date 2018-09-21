@@ -9,15 +9,15 @@ class Api::OrdersController < ApplicationController
   end
 
   def create
-   
-    @order = Order.new(
-                      product_id: params[:product_id],
-                      quantity: params[:quantity], 
-                      user_id: current_user.id
-                      )
+
+    @order = Order.new(user_id: current_user.id)
+
+    carted_products = current_user.cart
 
     @order.build_totals
     @order.save
+
+    carted_products.update_all(status: "purchased", order_id: @order.id)
 
     render "show.json.jbuilder"
 
