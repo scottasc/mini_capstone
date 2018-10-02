@@ -18,7 +18,7 @@ Rails.application.routes.draw do
 
     delete "/carted_products/:id" => 'carted_products#destroy'
 
-    #test test
+    #test test test
     
   end
 end
